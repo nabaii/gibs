@@ -138,6 +138,14 @@ export default function WebsiteSection({ onShowEnding }) {
   const [result,   setResult]   = useState(null)
   const [error,    setError]    = useState('')
 
+  // Stopwatch
+  const [swRunning, setSwRunning]     = useState(false)
+  const [swElapsed, setSwElapsed]     = useState(0)        // ms
+  const [swResult, setSwResult]       = useState(null)
+  const [swSpeed, setSwSpeed]         = useState(40)        // km/h default (city)
+  const swStartRef = useRef(null)
+  const swFrameRef = useRef(null)
+
   // Slideshow
   const [slideIdx, setSlideIdx] = useState(0)
   const slideTimer = useRef(null)
@@ -164,6 +172,47 @@ export default function WebsiteSection({ onShowEnding }) {
     slideTimer.current = setInterval(() => setSlideIdx(i => (i + 1) % SLIDES.length), 5000)
     return () => clearInterval(slideTimer.current)
   }, [tab])
+
+  // Stopwatch tick
+  useEffect(() => {
+    if (!swRunning) { cancelAnimationFrame(swFrameRef.current); return }
+    const tick = () => {
+      setSwElapsed(Date.now() - swStartRef.current)
+      swFrameRef.current = requestAnimationFrame(tick)
+    }
+    swFrameRef.current = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(swFrameRef.current)
+  }, [swRunning])
+
+  const swStart = () => {
+    swStartRef.current = Date.now() - swElapsed
+    setSwRunning(true)
+    setSwResult(null)
+  }
+  const swStop = () => {
+    setSwRunning(false)
+    const hours = swElapsed / 3_600_000
+    const dist = Math.round(hours * swSpeed * 10) / 10
+    const fuelCost   = (dist / 100) * FUEL_CAR_L100 * FUEL_PRICE
+    const hybridCost = (dist / 100) * HYBRID_L100   * FUEL_PRICE
+    const savings    = fuelCost - hybridCost
+    if (dist > 0) {
+      setSwResult({ dist, fuelCost, hybridCost, savings, savingsPct: fuelCost > 0 ? Math.round((savings / fuelCost) * 100) : 0 })
+    }
+  }
+  const swReset = () => {
+    setSwRunning(false)
+    setSwElapsed(0)
+    setSwResult(null)
+    swStartRef.current = null
+  }
+  const fmtTime = (ms) => {
+    const totalSec = Math.floor(ms / 1000)
+    const h = Math.floor(totalSec / 3600)
+    const m = Math.floor((totalSec % 3600) / 60)
+    const sec = totalSec % 60
+    return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(sec).padStart(2, '0')}`
+  }
 
   // ── Helpers ────────────────────────────────────
   const goTab = (id) => { setTab(id); setMenuOpen(false) }
@@ -496,7 +545,7 @@ export default function WebsiteSection({ onShowEnding }) {
                   <div className="calc-savings-amount">{naira(result.savings)}</div>
                   <div className="calc-savings-pct">on this trip alone</div>
                 </div>
-                <div style={{ textAlign: 'right' }}>
+                <div className="calc-savings-right">
                   <div className="calc-savings-label">Cost reduction</div>
                   <div className="calc-savings-amount">{result.savingsPct}%</div>
                   <div className="calc-savings-pct">cheaper than a fuel car</div>
@@ -506,6 +555,107 @@ export default function WebsiteSection({ onShowEnding }) {
               <p className="calc-disclaimer">
                 * Fuel price used: ₦{FUEL_PRICE.toLocaleString()}/L (PMS). Fuel car baseline: {FUEL_CAR_L100}L/100km.
                 Actual costs may vary based on driving conditions and fuel prices.
+              </p>
+            </div>
+          )}
+
+          {/* ── Stopwatch Section ── */}
+          <div className="sw-divider" />
+          <div className="ws-section-label">Trip Stopwatch</div>
+          <div className="ws-section-title">Track your ride in <span className="accent">real time.</span></div>
+          <p className="calc-intro">
+            Start the stopwatch when you begin driving and stop it when you arrive. We'll estimate the fuel cost for both a conventional car and the VANTA Aero based on your trip duration.
+          </p>
+
+          <div className="sw-speed-row">
+            <label className="form-label" style={{ marginBottom: 0 }}>Driving mode</label>
+            <div className="sw-speed-options">
+              {[
+                { label: 'City', value: 30 },
+                { label: 'Mixed', value: 50 },
+                { label: 'Highway', value: 80 },
+              ].map(opt => (
+                <button
+                  key={opt.value}
+                  className={`sw-speed-btn${swSpeed === opt.value ? ' active' : ''}`}
+                  onClick={() => { setSwSpeed(opt.value); setSwResult(null) }}
+                  disabled={swRunning}
+                >
+                  {opt.label}
+                  <span className="sw-speed-sub">{opt.value} km/h</span>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="sw-display">
+            <div className="sw-time">{fmtTime(swElapsed)}</div>
+            {swElapsed > 0 && !swRunning && !swResult && (
+              <div className="sw-paused-label">Paused</div>
+            )}
+          </div>
+
+          <div className="sw-controls">
+            {!swRunning && swElapsed === 0 && (
+              <button className="form-submit calc-btn sw-btn sw-start" onClick={swStart}>
+                Start Stopwatch
+              </button>
+            )}
+            {swRunning && (
+              <button className="form-submit calc-btn sw-btn sw-stop" onClick={swStop}>
+                Stop — Calculate Cost
+              </button>
+            )}
+            {!swRunning && swElapsed > 0 && !swResult && (
+              <div className="sw-btn-row">
+                <button className="form-submit calc-btn sw-btn sw-start" onClick={swStart}>Resume</button>
+                <button className="form-submit calc-btn sw-btn sw-stop" onClick={swStop}>Stop — Calculate</button>
+              </div>
+            )}
+            {swResult && (
+              <button className="form-submit calc-btn sw-btn sw-reset" onClick={swReset}>
+                Reset Stopwatch
+              </button>
+            )}
+          </div>
+
+          {swResult && (
+            <div className="calc-results">
+              <p className="calc-dist">
+                Estimated distance: <strong>~{swResult.dist.toLocaleString()} km</strong>
+                <span style={{ color: 'var(--gray)', marginLeft: '8px' }}>(based on {swSpeed} km/h average)</span>
+              </p>
+
+              <div className="calc-results-grid">
+                <div className="calc-result-card fuel">
+                  <div className="calc-result-type">Conventional Fuel Car</div>
+                  <div className="calc-result-cost">{naira(swResult.fuelCost)}</div>
+                  <div className="calc-result-sub">{FUEL_CAR_L100}L / 100km · ₦{FUEL_PRICE.toLocaleString()}/L</div>
+                </div>
+                <div className="calc-result-card hybrid">
+                  <div className="calc-result-badge">VANTA Aero</div>
+                  <div className="calc-result-type">Hybrid Vehicle</div>
+                  <div className="calc-result-cost">{naira(swResult.hybridCost)}</div>
+                  <div className="calc-result-sub">{HYBRID_L100}L / 100km · ₦{FUEL_PRICE.toLocaleString()}/L</div>
+                </div>
+              </div>
+
+              <div className="calc-savings-banner">
+                <div>
+                  <div className="calc-savings-label">You would save with the VANTA Aero</div>
+                  <div className="calc-savings-amount">{naira(swResult.savings)}</div>
+                  <div className="calc-savings-pct">on this trip</div>
+                </div>
+                <div className="calc-savings-right">
+                  <div className="calc-savings-label">Cost reduction</div>
+                  <div className="calc-savings-amount">{swResult.savingsPct}%</div>
+                  <div className="calc-savings-pct">cheaper than a fuel car</div>
+                </div>
+              </div>
+
+              <p className="calc-disclaimer">
+                * Distance estimated at {swSpeed} km/h average. Fuel price: ₦{FUEL_PRICE.toLocaleString()}/L (PMS).
+                Actual costs vary based on driving conditions, speed, and fuel prices.
               </p>
             </div>
           )}
@@ -658,7 +808,7 @@ export default function WebsiteSection({ onShowEnding }) {
           </div>
 
           {/* Mini car at bottom of slideshow */}
-          <div style={{ width: '100%', maxWidth: '600px', opacity: 0.35, marginTop: '60px' }}>
+          <div className="ws-slideshow-car">
             <CarSVG />
           </div>
         </div>

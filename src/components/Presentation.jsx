@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 
-const TOTAL_SLIDES = 13
+const TOTAL_SLIDES = 16
 
 const CarIcon = () => (
   <svg viewBox="0 0 24 24"><path d="M5 17H3V11L6 6h12l3 5v6h-2M9 17h6"/><circle cx="7.5" cy="17" r="2.5"/><circle cx="16.5" cy="17" r="2.5"/><path d="M5 11h14"/></svg>
@@ -124,6 +124,13 @@ export default function Presentation({ onEnterWebsite }) {
         Click or use arrow keys to advance
       </div>
 
+      <button
+        className="skip-to-site"
+        onClick={(e) => { e.stopPropagation(); onEnterWebsite() }}
+      >
+        Skip to Website →
+      </button>
+
       <div id="dot-nav">
         {Array.from({ length: TOTAL_SLIDES }, (_, i) => (
           <button
@@ -145,8 +152,41 @@ export default function Presentation({ onEnterWebsite }) {
         <div className="bg-gradient bg-indigo" />
         <div className="bg-gradient bg-coral" />
 
-        {/* SLIDE 1 — Title */}
+        {/* SLIDE 1 — Greeting */}
         <div {...s(0)}>
+          <div className="slide-inner transition-slide">
+            <h2 className="section-title reveal" style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)' }}>
+              Hello, <span className="accent">Gibs</span>
+            </h2>
+          </div>
+        </div>
+
+        {/* SLIDE 2 — Philosophy */}
+        <div {...s(1)}>
+          <div className="slide-inner transition-slide">
+            <p className="subtitle reveal" style={{ textAlign: 'center', maxWidth: '700px', margin: '0 auto', fontSize: 'clamp(1rem, 2.2vw, 1.35rem)', lineHeight: 1.8 }}>
+              At IEA, we believe proof holds far more value than words.
+            </p>
+            <p className="subtitle reveal reveal-d1" style={{ textAlign: 'center', maxWidth: '700px', margin: '16px auto 0', fontSize: 'clamp(1rem, 2.2vw, 1.35rem)', lineHeight: 1.8 }}>
+              We intend to <span className="accent">show</span> you what we will do for you, rather than simply write about it. Anyone can write.
+            </p>
+          </div>
+        </div>
+
+        {/* SLIDE 3 — What to Expect */}
+        <div {...s(2)}>
+          <div className="slide-inner transition-slide">
+            <p className="subtitle reveal" style={{ textAlign: 'center', maxWidth: '700px', margin: '0 auto', fontSize: 'clamp(1rem, 2.2vw, 1.35rem)', lineHeight: 1.8 }}>
+              What you are about to experience is our vision for how we would approach solving your challenges.
+            </p>
+            <p className="subtitle reveal reveal-d1" style={{ textAlign: 'center', maxWidth: '700px', margin: '16px auto 0', fontSize: 'clamp(1rem, 2.2vw, 1.35rem)', lineHeight: 1.8 }}>
+              To demonstrate this, we have built a working prototype of a website for a <span className="accent">hypothetical hybrid vehicle</span>.
+            </p>
+          </div>
+        </div>
+
+        {/* SLIDE 4 — Title */}
+        <div {...s(3)}>
           <div className="slide-inner" style={{ textAlign: 'center' }}>
             <div className="reveal" style={{ marginBottom: '28px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '16px' }}>
               <div style={{ width: '80px', height: '1px', background: 'linear-gradient(90deg,transparent,var(--coral))' }} />
@@ -162,48 +202,49 @@ export default function Presentation({ onEnterWebsite }) {
             <p className="subtitle reveal reveal-d3" style={{ margin: '20px auto 0', textAlign: 'center' }}>
               A strategic framework for launching and positioning a hybrid vehicle brand in the Nigerian market.
             </p>
-            <div className="reveal reveal-d4" style={{ marginTop: '40px' }}>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', letterSpacing: '3px', color: 'var(--gray)' }}>
+            <div className="reveal reveal-d4 slide-prepared-for">
+              <div className="slide-meta-text">
                 PREPARED FOR THE GIBS MANAGEMENT
               </div>
             </div>
           </div>
         </div>
 
-        {/* SLIDE 2 — About Us */}
-        <div {...s(1)}>
+        {/* SLIDE 5 — About Us */}
+        <div {...s(4)}>
           <div className="slide-inner">
             <div className="split">
               <div>
                 <div className="slide-number reveal">01 — Who We Are</div>
                 <h2 className="section-title reveal reveal-d1">We build brands<br />that <span className="accent">move</span> people.</h2>
                 <p className="subtitle reveal reveal-d2" style={{ marginTop: 0 }}>
-                  Iboro Ige-Edaba &amp; Associates is a Lagos-based creative and strategy agency specialising in brand positioning, digital marketing, and go-to-market campaigns for premium and emerging brands across Africa.
+                  A Nigerian-based consulting firm which has a designated creative agency specialising in brand positioning, digital marketing, and go-to-market campaigns for premium brands across West Africa.
                 </p>
                 <ul className="strat-list reveal reveal-d3">
-                  <li>8+ years shaping brand narratives in the Nigerian market</li>
-                  <li>End-to-end capabilities: strategy, creative, digital, media</li>
-                  <li>Deep understanding of the Nigerian consumer psyche</li>
+                  <li>25+ years of working with the largest companies in Nigeria</li>
+                  <li>4+ years shaping brand narratives in Nigeria</li>
+                  <li>End-to-end: strategy, creative, digital, media</li>
+                  <li>Deep understanding of the Nigerian consumer</li>
                 </ul>
               </div>
               <div>
                 <div className="card reveal reveal-d2" style={{ marginBottom: '20px' }}>
                   <div className="card-icon"><CarIcon /></div>
                   <h3>Automotive Experience</h3>
-                  <p>Campaign strategy for vehicle launches, dealership activations, and automotive lifestyle brands in the West African market.</p>
+                  <p>Vehicle launches, dealership activations, and automotive lifestyle brands across West Africa.</p>
                 </div>
                 <div className="card reveal reveal-d3">
                   <div className="card-icon"><PhoneIcon /></div>
                   <h3>Digital-First DNA</h3>
-                  <p>Performance marketing, social media ecosystems, and data-driven lead generation that converts interest into showroom visits.</p>
+                  <p>Performance marketing, social media ecosystems, and data-driven lead generation.</p>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* SLIDE 3 — The Opportunity */}
-        <div {...s(2)}>
+        {/* SLIDE 6 — The Opportunity */}
+        <div {...s(5)}>
           <div className="slide-inner">
             <div className="slide-number reveal">02 — Market Opportunity</div>
             <h2 className="section-title reveal reveal-d1">Nigeria is <span className="electric">ready</span> for hybrid.</h2>
@@ -225,30 +266,30 @@ export default function Presentation({ onEnterWebsite }) {
           </div>
         </div>
 
-        {/* SLIDE 4 — Positioning */}
-        <div {...s(3)}>
+        {/* SLIDE 7 — Positioning */}
+        <div {...s(6)}>
           <div className="slide-inner">
             <div className="slide-number reveal">03 — Brand Positioning</div>
             <h2 className="section-title reveal reveal-d1">Not just a car.<br /><span className="accent">A statement of intelligence.</span></h2>
             <div className="card-grid">
               <div className="card reveal reveal-d2">
                 <h3>The Positioning</h3>
-                <p>"The smartest way to drive Nigeria." — We position hybrid not as environmentally niche, but as the intelligent, forward-thinking choice for Nigeria's next generation of leaders.</p>
+                <p>"The smartest way to drive Nigeria." — Hybrid positioned as the intelligent choice for Nigeria's next generation of leaders.</p>
               </div>
               <div className="card reveal reveal-d3">
                 <h3>Target Personas</h3>
-                <p>Tech-forward professionals (30–50), corporate fleet managers seeking efficiency, and high-net-worth individuals who see their vehicle as a reflection of their values.</p>
+                <p>Tech-forward professionals (30–50), corporate fleet managers, and high-net-worth individuals.</p>
               </div>
               <div className="card reveal reveal-d4">
                 <h3>Key Message Pillars</h3>
-                <p><strong>Save Smarter</strong> — fuel economy that pays for itself. <strong>Drive Smarter</strong> — cutting-edge technology. <strong>Lead Smarter</strong> — be the first to the future.</p>
+                <p><strong>Save Smarter</strong> — fuel economy. <strong>Drive Smarter</strong> — cutting-edge tech. <strong>Lead Smarter</strong> — first to the future.</p>
               </div>
             </div>
           </div>
         </div>
 
-        {/* SLIDE 5 — Digital Strategy */}
-        <div {...s(4)}>
+        {/* SLIDE 8 — Digital Strategy */}
+        <div {...s(7)}>
           <div className="slide-inner">
             <div className="split">
               <div>
@@ -260,10 +301,10 @@ export default function Presentation({ onEnterWebsite }) {
               </div>
               <div>
                 {[
-                  { title: 'Website & Landing Pages', body: 'Immersive product experience site with 360° views, savings calculator, and instant test-drive booking. Bilingual — English & Pidgin landing variants.' },
-                  { title: 'Lead Generation Engine', body: 'WhatsApp Business API integration, Facebook & Instagram lead forms, Google Search Ads targeting "fuel efficient cars Nigeria" and related queries.' },
-                  { title: 'Social Media Ecosystem', body: 'Instagram (aspirational lifestyle), Twitter/X (conversations & thought leadership), TikTok (test-drive reactions & fuel savings content), LinkedIn (fleet/B2B).' },
-                  { title: 'Paid Media', body: 'Programmatic display on Nigerian news sites, YouTube pre-roll, Instagram Stories ads — all with clear "Book Test Drive" CTAs.' },
+                  { title: 'Website & Landing Pages', body: '360° views, savings calculator, and instant test-drive booking. English & Pidgin variants.' },
+                  { title: 'Lead Generation Engine', body: 'WhatsApp API, Facebook & Instagram lead forms, Google Ads targeting fuel-efficient car queries.' },
+                  { title: 'Social Media Ecosystem', body: 'Instagram (lifestyle), Twitter/X (thought leadership), TikTok (test-drives), LinkedIn (fleet/B2B).' },
+                  { title: 'Paid Media', body: 'Programmatic display, YouTube pre-roll, Instagram Stories — all with "Book Test Drive" CTAs.' },
                 ].map((item, i) => (
                   <div key={i} className={`card reveal reveal-d${i + 2}`} style={{ marginBottom: i < 3 ? '16px' : 0 }}>
                     <h3>{item.title}</h3>
@@ -275,19 +316,19 @@ export default function Presentation({ onEnterWebsite }) {
           </div>
         </div>
 
-        {/* SLIDE 6 — Visual Campaign */}
-        <div {...s(5)}>
+        {/* SLIDE 9 — Visual Campaign */}
+        <div {...s(8)}>
           <div className="slide-inner" style={{ textAlign: 'center' }}>
             <div className="slide-number reveal">05 — Campaign Concept</div>
             <h2 className="section-title reveal reveal-d1">"<span className="accent">Outsmart the Road.</span>"</h2>
-            <p className="subtitle reveal reveal-d2" style={{ margin: '0 auto 40px', textAlign: 'center', maxWidth: '600px' }}>
-              A campaign that positions hybrid ownership as a mark of intelligence. Every visual, every story, every touchpoint reinforces that choosing hybrid means you've outthought the rest.
+            <p className="subtitle reveal reveal-d2" style={{ margin: '0 auto 24px', textAlign: 'center', maxWidth: '600px' }}>
+              Hybrid ownership as a mark of intelligence. Every visual, story, and touchpoint reinforces: choosing hybrid means you've outthought the rest.
             </p>
             <div className="card-grid reveal reveal-d3">
               {[
-                { title: 'Hero Film', body: "A Lagos professional cruises past fuel queues in silence. The tagline lands: \"They're waiting. You're driving.\" 60-second hero spot for social, YouTube, and cinema." },
-                { title: 'OOH & Print', body: 'Bold, minimalist billboards across Lagos, Abuja, and Port Harcourt. Fuel gauge on empty → "Unless you drive smarter." Clean vehicle shot + CTA.' },
-                { title: 'Social Content Series', body: '"Fuel Math" — weekly posts showing real naira saved by hybrid owners. UGC-driven, shareable, and designed to spark conversation around running costs.' },
+                { title: 'Hero Film', body: "Port-Harcourt professional cruises past fuel queues. \"They're waiting. You're driving.\" 60s spot for social, YouTube, cinema." },
+                { title: 'OOH & Print', body: 'Minimalist online ads across all platforms.Fuel gauge on empty → "Drive smarter." Clean vehicle shot + CTA.' },
+                { title: 'Social Content Series', body: '"Fuel Math" — weekly posts showing real naira saved. UGC-driven, shareable, sparking conversation on running costs.' },
               ].map((item, i) => (
                 <div key={i} className="card" style={{ textAlign: 'left' }}>
                   <h3>{item.title}</h3>
@@ -298,69 +339,63 @@ export default function Presentation({ onEnterWebsite }) {
           </div>
         </div>
 
-        {/* SLIDE 7 — Influencer & PR */}
-        <div {...s(6)}>
+        {/* SLIDE 10 — Influencer & PR */}
+        <div {...s(9)}>
           <div className="slide-inner">
             <div className="slide-number reveal">06 — Influencer &amp; PR</div>
             <h2 className="section-title reveal reveal-d1">Earned trust through <span className="accent">credible voices.</span></h2>
             <div className="split" style={{ marginTop: '20px' }}>
               <ul className="strat-list reveal reveal-d2">
-                <li><strong>Tier 1:</strong> Tech &amp; business macro-influencers (500K+ followers) — week-long vehicle loans with "honest review" content</li>
-                <li><strong>Tier 2:</strong> Lifestyle &amp; auto micro-influencers — test-drive vlogs, fuel savings challenges</li>
-                <li><strong>Tier 3:</strong> Corporate leaders &amp; CEOs — LinkedIn thought leadership placements, "Why I switched" narratives</li>
-                <li><strong>Media Relations:</strong> Launch event with Channels TV, BusinessDay, TechCabal — test drives for journalists, embargoed specs &amp; pricing</li>
+                <li><strong>Tier 1:</strong> Tech &amp; business macro-influencers (100K+) — vehicle loans, "honest review" content</li>
+                <li><strong>Tier 2:</strong> Lifestyle &amp; auto micro-influencers — test-drive vlogs, fuel challenges</li>
+                <li><strong>Tier 3:</strong> Corporate leaders &amp; CEOs — LinkedIn placements, "Why I switched"</li>
               </ul>
               <div>
                 <div className="card reveal reveal-d3" style={{ marginBottom: '16px' }}>
                   <h3>PR Moments</h3>
-                  <p>Exclusive media preview event at Eko Hotels. Partnership announcement with a major Nigerian corporation for fleet pilot. Feature pieces in Guardian Nigeria, Punch, and Arise TV.</p>
+                  <p>Exclusive preview at with select paid influencers. Corporate fleet partnership announcement.</p>
                 </div>
                 <div className="card reveal reveal-d4">
                   <h3>Content Strategy</h3>
-                  <p>Monthly "Hybrid Diaries" video series following real Nigerian owners. Quarterly sustainability report positioning the brand as an industry leader.</p>
+                  <p>Monthly "Hybrid Diaries" video series with real owners. Quarterly sustainability report.</p>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* SLIDE 8 — B2B / Fleet */}
-        <div {...s(7)}>
+        {/* SLIDE 11 — B2B / Fleet */}
+        <div {...s(10)}>
           <div className="slide-inner">
             <div className="slide-number reveal">07 — Corporate &amp; Fleet Sales</div>
             <h2 className="section-title reveal reveal-d1">The enterprise <span className="electric">opportunity.</span></h2>
-            <p className="subtitle reveal reveal-d2" style={{ maxWidth: '650px' }}>Fleet is where volume lives. We create a dedicated B2B track that speaks the language of CFOs — total cost of ownership, not sticker price.</p>
+            <p className="subtitle reveal reveal-d2" style={{ maxWidth: '650px' }}>Fleet is where volume lives. A dedicated B2B track speaking the language of CFOs — total cost of ownership, not sticker price.</p>
             <div className="card-grid reveal reveal-d3">
-              <div className="card">
-                <div className="card-icon"><BuildingIcon /></div>
-                <h3>Fleet Pilot Programme</h3>
-                <p>Partner with 5 major Lagos corporations for a 90-day fleet trial. Provide real fuel savings data. Let the numbers do the selling.</p>
-              </div>
               <div className="card">
                 <div className="card-icon"><ChartIcon /></div>
                 <h3>TCO Calculator</h3>
-                <p>Custom digital tool showing 3-year cost comparison: hybrid vs. petrol. Shared via LinkedIn campaigns targeting fleet managers and procurement officers.</p>
+                <p>Daily cost comparison: hybrid vs. petrol. LinkedIn, Instagram and Tiktok campaigns targeting customers and businesses.</p>
               </div>
               <div className="card">
                 <div className="card-icon"><HeartIcon /></div>
                 <h3>Enterprise Portal</h3>
-                <p>Dedicated website section for B2B enquiries with fleet pricing, bulk order incentives, and direct account manager contact.</p>
+                <p>Dedicated B2B section with fleet pricing, bulk incentives, because we believe businesses are designed to optimize spending. Hybrid does this.</p>
               </div>
             </div>
           </div>
         </div>
 
-        {/* SLIDE 9 — Trust */}
-        <div {...s(8)}>
+        {/* SLIDE 12 — Trust */}
+        <div {...s(11)}>
           <div className="slide-inner">
             <div className="slide-number reveal">08 — Trust Building</div>
             <h2 className="section-title reveal reveal-d1">Trust is the <span className="accent">real currency.</span></h2>
-            <p className="subtitle reveal reveal-d2" style={{ maxWidth: '650px' }}>Nigerian consumers need proof, not promises. Every trust signal is designed to remove friction from the purchase decision.</p>
+            <p className="subtitle reveal reveal-d2" style={{ maxWidth: '650px' }}>Nigerian consumers need proof, not promises. Every signal removes friction from the purchase decision.</p>
             <div className="card-grid reveal reveal-d3">
               {[
-                { title: '5-Year Warranty Messaging', body: 'Bold, front-and-centre warranty communication. "We stand behind every kilometre." Warranty card becomes a premium unboxing moment.' },
-                { title: 'Service Network Visibility', body: 'Interactive service centre map on website. "Your nearest certified hybrid service centre is X minutes away." Partnership with existing service networks.' },
-                { title: 'Hybrid Academy', body: 'Free educational content addressing hybrid myths: battery life, maintenance costs, resale value. YouTube series + dealership workshops.' },
+                { title: 'Transparency', body: '"We stand behind every kilometre." By providing the users the ability track savings on each mile through the calculator, we show it is not a facade.' },
+                { title: 'Service Network', body: 'Interactive service centre map. "Your nearest hybrid centre is X minutes away."' },
+                { title: 'Hybrid Academy', body: 'Addressing hybrid myths: battery life, maintenance, resale. YouTube series + workshops.' },
               ].map((item, i) => (
                 <div key={i} className="card">
                   <h3>{item.title}</h3>
@@ -371,17 +406,17 @@ export default function Presentation({ onEnterWebsite }) {
           </div>
         </div>
 
-        {/* SLIDE 10 — Phased Rollout */}
-        <div {...s(9)}>
+        {/* SLIDE 13 — Phased Rollout */}
+        <div {...s(12)}>
           <div className="slide-inner">
             <div className="slide-number reveal">09 — Phased Rollout</div>
             <h2 className="section-title reveal reveal-d1">A strategic, <span className="electric">phased</span> launch.</h2>
             <div className="timeline reveal reveal-d2">
               {[
-                { label: 'Phase 1 — Months 1–3', title: 'Brand Ignition', desc: 'Teaser campaign, media launch event, influencer seeding, website launch, initial PR wave. Build awareness and intrigue before vehicles are available.' },
-                { label: 'Phase 2 — Months 4–6', title: 'Lead Generation & Test Drives', desc: 'Full digital ad rollout, WhatsApp lead nurturing, pop-up test drive experiences in Lagos & Abuja. Convert curiosity into qualified leads.' },
-                { label: 'Phase 3 — Months 7–9', title: 'Sales Acceleration', desc: 'Owner testimonial campaign, fleet pilot results published, referral programme launch. Leverage early adopter stories to drive broader adoption.' },
-                { label: 'Phase 4 — Months 10–12', title: 'National Expansion', desc: 'Expand to Port Harcourt, Kano, Enugu. Dealership network campaign. Year-end review event. Set foundation for Year 2 growth.' },
+                { label: 'Phase 1 — Mo 1–3', title: 'Brand Ignition', desc: 'Teaser campaign, media launch, influencer seeding, website launch, PR wave.' },
+                { label: 'Phase 2 — Mo 4–6', title: 'Lead Gen & Test Drives', desc: 'Full digital rollout, WhatsApp nurturing, pop-up test drives in Lagos & Abuja.' },
+                { label: 'Phase 3 — Mo 7–9', title: 'Sales Acceleration', desc: 'Owner testimonials, fleet pilot results, referral programme. Early adopter stories.' },
+                { label: 'Phase 4 — Mo 10–12', title: 'National Expansion', desc: 'Expand to PH, Lagos, Abuja. Year-end review. Year 2 foundation.' },
               ].map((item, i) => (
                 <div key={i} className="timeline-item">
                   <div className="timeline-label">{item.label}</div>
@@ -393,8 +428,8 @@ export default function Presentation({ onEnterWebsite }) {
           </div>
         </div>
 
-        {/* SLIDE 11 — Budget */}
-        <div {...s(10)}>
+        {/* SLIDE 14 — Budget */}
+        <div {...s(13)}>
           <div className="slide-inner">
             <div className="slide-number reveal">10 — Budget Framework</div>
             <h2 className="section-title reveal reveal-d1">Investment <span className="accent">structure.</span></h2>
@@ -422,31 +457,31 @@ export default function Presentation({ onEnterWebsite }) {
           </div>
         </div>
 
-        {/* SLIDE 12 — Transition Tease */}
-        <div {...s(11)}>
+        {/* SLIDE 15 — Transition Tease */}
+        <div {...s(14)}>
           <div className="slide-inner transition-slide">
             <div className="reveal"><div className="transition-line" /></div>
             <h2 className="reveal reveal-d1">We don't just <em>present</em> strategies.</h2>
             <h2 className="reveal reveal-d2" style={{ color: 'var(--coral)' }}>We <em>build</em> them.</h2>
-            <p className="subtitle reveal reveal-d3" style={{ margin: '30px auto 0', textAlign: 'center', maxWidth: '480px' }}>
+            <p className="subtitle transition-subtitle reveal reveal-d3">
               What you're about to see is a fully realised sample of the vehicle brand website we would create. This is not a mockup — it's a working prototype.
             </p>
           </div>
         </div>
 
-        {/* SLIDE 13 — Let's Go */}
-        <div {...s(12)}>
+        {/* SLIDE 16 — Let's Go */}
+        <div {...s(15)}>
           <div className="slide-inner transition-slide">
             <div className="slide-number reveal" style={{ color: 'var(--coral)' }}>Presenting</div>
-            <h2 className="reveal reveal-d1" style={{ fontSize: 'clamp(64px,8vw,110px)', letterSpacing: '-0.03em' }}>
+            <h2 className="vanta-title reveal reveal-d1">
               VANTA<span className="accent"> Aero</span>
             </h2>
             <p className="subtitle reveal reveal-d2" style={{ textAlign: 'center', margin: '10px auto 0' }}>
               The hybrid vehicle brand website, built by our team.
             </p>
-            <div className="reveal reveal-d3" style={{ marginTop: '40px' }}>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', letterSpacing: '3px', color: 'var(--indigo-light)', animation: 'pulse 2s infinite' }}>
-                CLICK TO EXPERIENCE →
+            <div className="reveal reveal-d3 slide-cta-hint">
+              <div className="slide-cta-hint-text">
+                TAP TO EXPERIENCE →
               </div>
             </div>
           </div>

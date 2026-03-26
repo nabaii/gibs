@@ -73,6 +73,28 @@ body::after {
 }
 
 /* ─── DOT NAVIGATION ─── */
+.skip-to-site {
+  position: fixed;
+  top: 28px;
+  right: 40px;
+  z-index: 1001;
+  background: none;
+  border: none;
+  color: var(--gray);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  padding: 0;
+  cursor: pointer;
+  transition: color 0.4s, opacity 0.4s;
+  opacity: 0.5;
+}
+.skip-to-site:hover {
+  color: var(--coral);
+  opacity: 1;
+}
+
 #dot-nav {
   position: fixed;
   bottom: 34px;
@@ -463,11 +485,39 @@ h2.section-title {
   line-height: 1.2;
   letter-spacing: -0.02em;
 }
+.vanta-title {
+  font-size: clamp(48px, 8vw, 110px);
+  letter-spacing: -0.03em;
+}
 .transition-line {
   width: 120px;
   height: 1px;
   background: linear-gradient(90deg, transparent, var(--indigo), var(--coral), transparent);
   margin: 36px auto;
+}
+.transition-subtitle {
+  margin: 30px auto 0;
+  text-align: center;
+  max-width: 480px;
+}
+.slide-cta-hint {
+  margin-top: 40px;
+}
+.slide-cta-hint-text {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: var(--indigo-light);
+  animation: pulse 2s infinite;
+}
+.slide-prepared-for {
+  margin-top: 40px;
+}
+.slide-meta-text {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: var(--gray);
 }
 
 /* ─── WEBSITE SECTION ─── */
@@ -1179,6 +1229,9 @@ h2.section-title {
   color: var(--gray);
   margin-top: 6px;
 }
+.calc-savings-right {
+  text-align: right;
+}
 .calc-disclaimer {
   font-family: var(--font-mono);
   font-size: 10px;
@@ -1187,6 +1240,118 @@ h2.section-title {
   margin-top: 20px;
   opacity: 0.7;
   line-height: 1.6;
+}
+
+/* ─── STOPWATCH ─── */
+.sw-divider {
+  width: 100%;
+  max-width: 600px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(108,99,255,0.2), transparent);
+  margin: 60px auto;
+}
+.sw-speed-row {
+  max-width: 600px;
+  margin: 0 auto 30px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.sw-speed-options {
+  display: flex;
+  gap: 10px;
+  flex: 1;
+}
+.sw-speed-btn {
+  flex: 1;
+  background: rgba(108,99,255,0.06);
+  border: 1px solid rgba(108,99,255,0.15);
+  border-radius: 10px;
+  padding: 10px 8px;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+}
+.sw-speed-btn:hover:not(:disabled) {
+  border-color: var(--indigo-light);
+  background: rgba(108,99,255,0.12);
+}
+.sw-speed-btn.active {
+  border-color: var(--indigo-light);
+  background: rgba(108,99,255,0.15);
+  box-shadow: 0 0 12px rgba(108,99,255,0.2);
+}
+.sw-speed-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.sw-speed-sub {
+  display: block;
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--gray);
+  margin-top: 2px;
+  font-family: var(--font-mono);
+}
+.sw-display {
+  text-align: center;
+  margin: 20px auto 24px;
+}
+.sw-time {
+  font-family: var(--font-mono);
+  font-size: clamp(48px, 10vw, 80px);
+  font-weight: 700;
+  letter-spacing: 4px;
+  color: var(--text);
+  line-height: 1;
+}
+.sw-paused-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--coral);
+  margin-top: 8px;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+.sw-controls {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+.sw-btn {
+  min-width: 200px;
+  text-align: center;
+}
+.sw-btn-row {
+  display: flex;
+  gap: 12px;
+}
+.sw-start {
+  background: linear-gradient(135deg, var(--indigo-light), #8B5CF6) !important;
+}
+.sw-start:hover {
+  box-shadow: 0 4px 20px rgba(108,99,255,0.4) !important;
+}
+.sw-stop {
+  background: linear-gradient(135deg, var(--coral), #FF8A65) !important;
+}
+.sw-stop:hover {
+  box-shadow: 0 4px 20px rgba(255,107,71,0.4) !important;
+}
+.sw-reset {
+  background: rgba(108,99,255,0.1) !important;
+  border: 1px solid rgba(108,99,255,0.2) !important;
+  color: var(--text) !important;
+}
+.sw-reset:hover {
+  background: rgba(108,99,255,0.2) !important;
 }
 
 /* ─── SLIDESHOW ─── */
@@ -1294,28 +1459,73 @@ h2.section-title {
   color: var(--coral);
   background: rgba(255, 107, 71, 0.06);
 }
+.ws-slideshow-car {
+  width: 100%;
+  max-width: 600px;
+  opacity: 0.35;
+  margin-top: 60px;
+}
 
 /* ─── RESPONSIVE ─── */
 @media (max-width: 768px) {
   /* ── Presentation slide chrome ── */
-  .slide { padding: 20px; padding-top: 72px; padding-bottom: 80px; }
+  .slide {
+    padding: 14px 16px;
+    padding-top: 56px;
+    padding-bottom: 70px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    align-items: flex-start;
+  }
   .nav-arrow { display: none; }
-  #dot-nav { bottom: 20px; }
+  #dot-nav { bottom: 18px; }
   #click-hint { display: none; }
-  #counter { right: 16px; bottom: 20px; font-size: 10px; }
-  .agency-logo { left: 16px; top: 20px; font-size: 11px; letter-spacing: 2px; }
+  #counter { right: 16px; bottom: 42px; font-size: 9px; }
+  .agency-logo { left: 12px; top: 14px; font-size: 10px; letter-spacing: 2px; }
   .agency-logo span { letter-spacing: 2px; }
+  .skip-to-site { top: 14px; right: 12px; font-size: 9px; letter-spacing: 2px; }
+
+  /* ── Presentation typography ── */
+  h1.hero-title { font-size: clamp(30px, 7vw, 48px); }
+  h2.section-title { font-size: clamp(24px, 6vw, 36px); margin-bottom: 12px; }
+  .slide-number { font-size: 9px; letter-spacing: 3px; margin-bottom: 10px; }
+  .subtitle { font-size: 13px; line-height: 1.5; margin-top: 10px; }
 
   /* ── Presentation layouts ── */
-  .split { grid-template-columns: 1fr; gap: 32px; }
-  .card-grid { grid-template-columns: 1fr; }
-  .stat-row { flex-direction: column; gap: 24px; }
-  .stat-number { font-size: 40px; }
+  .split { grid-template-columns: 1fr; gap: 20px; }
+  .card-grid { grid-template-columns: 1fr; gap: 12px; margin-top: 16px; }
+  .card { padding: 14px 16px; border-radius: 10px; }
+  .card h3 { font-size: 16px; margin-bottom: 4px; }
+  .card p { font-size: 12px; line-height: 1.45; }
+  .card-icon { width: 32px; height: 32px; margin-bottom: 10px; border-radius: 8px; }
+  .card-icon svg { width: 16px; height: 16px; }
+
+  /* ── Stats ── */
+  .stat-row { flex-direction: row; gap: 24px; margin-top: 16px; }
+  .stat-number { font-size: 28px; }
+  .stat-label { font-size: 10px; }
+
+  /* ── Strat list ── */
+  .strat-list { margin-top: 10px; }
+  .strat-list li { font-size: 12px; padding: 6px 0; line-height: 1.45; }
+
+  /* ── Timeline ── */
+  .timeline { margin-top: 16px; padding-left: 24px; }
+  .timeline-item { padding-bottom: 16px; }
+  .timeline-item::before { left: -28px; top: 4px; width: 8px; height: 8px; }
+  .timeline-label { font-size: 9px; letter-spacing: 2px; margin-bottom: 2px; }
+  .timeline-title { font-size: 16px; margin-bottom: 2px; }
+  .timeline-desc { font-size: 11px; line-height: 1.4; }
+
+  /* ── Budget table ── */
   .budget-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-  .transition-slide h2 { font-size: clamp(36px, 10vw, 56px) !important; }
+  .budget-table td { padding: 8px 0; font-size: 12px; }
+  .budget-table th { font-size: 9px; padding: 8px 0; }
+
+  .transition-slide h2 { font-size: clamp(26px, 7vw, 42px) !important; }
 
   /* ── Website nav ── */
-  .ws-nav { padding: 0 20px; }
+  .ws-nav { padding: 0 16px; }
   .ws-nav-links {
     display: none;
     position: absolute;
@@ -1326,7 +1536,7 @@ h2.section-title {
     align-items: stretch;
     background: rgba(8, 7, 15, 0.98);
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    padding: 12px 0;
+    padding: 8px 0;
     gap: 0;
   }
   .ws-nav-links.open { display: flex; }
@@ -1336,51 +1546,157 @@ h2.section-title {
   .ws-nav-brand { letter-spacing: 4px; font-size: 15px; }
 
   /* ── Website hero ── */
-  .ws-hero { padding: 80px 20px 40px; }
+  .ws-hero { padding: 80px 20px 40px; min-height: auto; }
   .ws-brand { letter-spacing: 4px; font-size: 13px; }
-  .ws-hero-sub { font-size: 16px; }
-  .car-visual { margin-top: 36px; }
+  .ws-hero-sub { font-size: 15px; margin-bottom: 28px; }
+  .ws-cta { padding: 14px 28px; font-size: 11px; letter-spacing: 2px; }
+  .car-visual { margin-top: 32px; }
 
   /* ── Website sections ── */
-  .ws-section { padding: 60px 20px; }
-  .ws-slideshow { padding: 48px 20px; }
+  .ws-section { padding: 48px 20px; }
+  .ws-section-title { font-size: clamp(26px, 5.5vw, 40px); margin-bottom: 28px; }
+  .ws-slideshow { padding: 40px 16px; min-height: calc(100vh - 64px); }
 
   /* ── Features ── */
   .feature-grid { grid-template-columns: 1fr 1fr; }
-  .feature-cell { padding: 28px 16px; }
-  .feature-number { font-size: 36px; }
+  .feature-cell { padding: 24px 14px; }
+  .feature-number { font-size: 32px; margin-bottom: 8px; }
+  .feature-name { font-size: 16px; }
+  .feature-desc { font-size: 12px; line-height: 1.5; }
 
   /* ── Trust ── */
-  .trust-grid { grid-template-columns: 1fr; }
+  .trust-grid { grid-template-columns: 1fr; gap: 16px; }
+  .trust-item { padding: 28px 20px; }
 
   /* ── Form ── */
-  .form-split { grid-template-columns: 1fr; gap: 40px; }
+  .form-split { grid-template-columns: 1fr; gap: 32px; }
+  .form-submit { width: 100%; text-align: center; }
 
   /* ── CTA banner ── */
-  .ws-cta-banner { padding: 60px 20px; }
+  .ws-cta-banner { padding: 48px 20px; }
+  .ws-cta-banner .ws-cta { opacity: 1; }
 
   /* ── Footer ── */
   .ws-footer { padding: 40px 20px 30px; }
-  .footer-grid { grid-template-columns: 1fr; gap: 32px; }
-  .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 28px; }
+  .footer-grid > div:first-child { grid-column: 1 / -1; }
+  .footer-bottom { flex-direction: column; gap: 8px; text-align: center; font-size: 11px; }
 
   /* ── About ── */
-  .about-grid { grid-template-columns: 1fr; gap: 40px; }
+  .about-grid { grid-template-columns: 1fr; gap: 32px; }
+  .about-text { font-size: 14px; line-height: 1.7; margin-bottom: 14px; }
   .about-stats { grid-template-columns: 1fr 1fr; }
+  .about-stat { padding: 24px 20px; }
+  .about-stat-num { font-size: 32px; }
+
+  /* ── Specs ── */
+  .spec-row { padding: 14px 16px; flex-wrap: wrap; gap: 4px; }
+  .spec-key { font-size: 10px; }
+  .spec-val { font-size: 13px; }
 
   /* ── Calculator ── */
+  .calc-intro { font-size: 14px; margin-bottom: 32px; }
   .calc-results-grid { grid-template-columns: 1fr; }
-  .calc-savings-banner { flex-direction: column; text-align: left; padding: 24px 20px; }
+  .calc-result-card { padding: 24px 20px; }
+  .calc-savings-banner {
+    flex-direction: column;
+    text-align: center;
+    padding: 24px 20px;
+    gap: 20px;
+  }
+  .calc-savings-banner > div { text-align: center !important; }
+  .calc-savings-amount { font-size: clamp(28px, 7vw, 40px); }
   .calc-input-row { flex-direction: column; align-items: stretch; }
   .calc-locate-btn { justify-content: center; }
 
+  /* ── Stopwatch ── */
+  .sw-speed-row { flex-direction: column; align-items: stretch; gap: 8px; }
+  .sw-btn { min-width: unset; width: 100%; }
+  .sw-btn-row { flex-direction: column; width: 100%; }
+
+  /* ── Website slideshow ── */
+  .ws-slide-title { font-size: clamp(32px, 8vw, 52px); margin-bottom: 20px; }
+  .ws-slide-desc { font-size: 14px; line-height: 1.6; margin-bottom: 32px; }
+  .ws-slide-sub { font-size: 10px; letter-spacing: 4px; margin-bottom: 16px; }
+  .ws-slide-nav-btn { width: 42px; height: 42px; }
+  .ws-slideshow-car { margin-top: 32px; max-width: 400px; }
+
+  /* ── VANTA title on slide 13 ── */
+  .vanta-title { font-size: clamp(40px, 10vw, 64px); }
+
+  /* ── Transition slides ── */
+  .transition-subtitle { margin-top: 16px; max-width: 90vw; font-size: 13px; }
+  .transition-line { margin: 20px auto; width: 80px; }
+  .slide-cta-hint { margin-top: 24px; }
+  .slide-cta-hint-text { font-size: 10px; letter-spacing: 2px; }
+  .slide-prepared-for { margin-top: 24px; }
+  .slide-meta-text { font-size: 9px; letter-spacing: 2px; }
+
   /* ── Pitch ending ── */
+  #pitch-ending .pe-text { font-size: clamp(18px, 4.5vw, 28px); max-width: 90vw; }
   #pitch-ending .pe-agency { letter-spacing: 4px; font-size: 15px; }
+  #pitch-ending .pe-hint { margin-top: 36px; }
 }
 
 @media (max-width: 420px) {
+  .slide { padding: 10px 14px; padding-top: 48px; padding-bottom: 60px; }
+  h1.hero-title { font-size: clamp(26px, 7vw, 38px); }
+  h2.section-title { font-size: clamp(20px, 5.5vw, 28px); margin-bottom: 8px; }
+  .subtitle { font-size: 12px; line-height: 1.4; }
+  .card { padding: 12px 14px; }
+  .card h3 { font-size: 14px; }
+  .card p { font-size: 11px; line-height: 1.4; }
+  .strat-list li { font-size: 11px; padding: 5px 0; }
+  .timeline-desc { font-size: 10px; }
+  .timeline-title { font-size: 14px; }
+  .stat-row { gap: 16px; }
+  .stat-number { font-size: 24px; }
+  .stat-label { font-size: 9px; }
+  .budget-table td { font-size: 11px; }
+
   .feature-grid { grid-template-columns: 1fr; }
-  .agency-logo .logo-divider { margin: 0 6px; }
-  .ws-hero-title { font-size: clamp(40px, 12vw, 64px) !important; }
+  .feature-cell { padding: 20px 14px; }
+  .feature-number { font-size: 28px; }
+
+  .agency-logo { font-size: 9px; letter-spacing: 1.5px; }
+  .agency-logo span { letter-spacing: 1.5px; }
+  .agency-logo .logo-divider { margin: 0 6px; height: 12px; }
+
+  .ws-hero { padding: 72px 16px 32px; }
+  .ws-hero-title { font-size: clamp(36px, 11vw, 56px) !important; }
+  .ws-hero-sub { font-size: 14px; }
+  .ws-cta { padding: 12px 24px; font-size: 10px; }
+
+  .ws-section { padding: 36px 16px; }
+  .ws-section-title { font-size: clamp(22px, 5vw, 32px); margin-bottom: 20px; }
+  .ws-slideshow { padding: 32px 14px; }
+
   .about-stats { grid-template-columns: 1fr; }
+  .about-stat { padding: 20px 16px; }
+  .about-stat-num { font-size: 28px; }
+
+  .footer-grid { grid-template-columns: 1fr; gap: 24px; }
+  .footer-grid > div:first-child { grid-column: 1; }
+
+  .trust-item { padding: 20px 16px; }
+
+  .ws-cta-banner { padding: 36px 16px; }
+
+  .spec-row { padding: 12px 14px; }
+
+  .calc-result-card { padding: 20px 16px; }
+  .calc-savings-banner { padding: 20px 16px; }
+
+  .ws-slide-title { font-size: clamp(28px, 8vw, 42px); }
+  .ws-slide-desc { font-size: 13px; }
+  .ws-slideshow-car { margin-top: 20px; max-width: 300px; opacity: 0.25; }
+
+  .form-split { gap: 24px; }
+
+  .transition-slide h2 { font-size: clamp(22px, 6.5vw, 36px) !important; }
+  .vanta-title { font-size: clamp(32px, 9vw, 48px); }
+
+  #pitch-ending .pe-text { font-size: clamp(16px, 4vw, 24px); }
+  #pitch-ending .pe-agency { font-size: 13px; letter-spacing: 3px; }
+  #pitch-ending .pe-divider { margin: 24px auto 20px; }
 }
