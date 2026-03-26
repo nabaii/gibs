@@ -166,9 +166,10 @@ export default function WebsiteSection({ onShowEnding }) {
     return () => window.removeEventListener('scroll', checkEnd)
   }, [tab, onShowEnding])
 
-  // Slideshow auto-advance
+  // Slideshow auto-advance — restart from slide 0 each time the tab is opened
   useEffect(() => {
     if (tab !== 'slideshow') { clearInterval(slideTimer.current); return }
+    setSlideIdx(0)
     slideTimer.current = setInterval(() => setSlideIdx(i => (i + 1) % SLIDES.length), 5000)
     return () => clearInterval(slideTimer.current)
   }, [tab])
@@ -383,6 +384,68 @@ export default function WebsiteSection({ onShowEnding }) {
               Book a Test Drive <span>→</span>
             </button>
             <div className="car-visual"><CarSVG /></div>
+          </div>
+        </div>
+
+        {/* Our Story (from About) */}
+        <div className="ws-section">
+          <div className="ws-section-label">Our Story</div>
+          <div className="ws-section-title">
+            Born in <span className="accent">Nigeria.</span><br />
+            Built for <span className="electric">the world.</span>
+          </div>
+          <div className="about-grid">
+            <div>
+              <p className="about-text">
+                VANTA Motors was founded on a single conviction: that Nigerian drivers deserve world-class vehicles engineered for their roads, their climate, and their future.
+              </p>
+              <p className="about-text">
+                We didn't set out to make just another car. We set out to make the car Nigeria never had — a luxury hybrid that confronts the realities of our infrastructure head-on, without sacrificing the refinement our drivers deserve.
+              </p>
+              <p className="about-text">
+                The Aero is the result of three years of engineering in partnership with globally certified hybrid specialists, road-tested across Lagos, Abuja, Port Harcourt, and everything in between.
+              </p>
+            </div>
+            <div className="about-stats">
+              {[
+                { num: '3',    label: 'Years in Development' },
+                { num: '850km', label: 'Total Driving Range' },
+                { num: '12',   label: 'Service Centres' },
+                { num: '65%',  label: 'Fuel Cost Reduction' },
+              ].map(({ num, label }) => (
+                <div key={label} className="about-stat">
+                  <div className="about-stat-num">{num}</div>
+                  <div className="about-stat-label">{label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Specifications (from Products) */}
+        <div className="ws-section">
+          <div className="ws-section-label">Specifications</div>
+          <div className="ws-section-title">The <span className="electric">VANTA Aero</span> — fully loaded.</div>
+          <div className="specs-grid">
+            {[
+              ['Powertrain',      '2.5L Atkinson-cycle + Electric Motor'],
+              ['Combined Output', '320 hp / 450 Nm'],
+              ['Fuel Economy',    '4.2L / 100km (combined cycle)'],
+              ['Total Range',     '850 km'],
+              ['0 – 100 km/h',   '6.4 seconds'],
+              ['Top Speed',       '210 km/h'],
+              ['Ground Clearance','200 mm'],
+              ['Seating',         '5 passengers'],
+              ['Boot Space',      '580L (seats up)'],
+              ['Infotainment',    '14" VANTA Connect touchscreen'],
+              ['Driver Aids',     'AEB, LKA, BSM, RCTA, ACC'],
+              ['Warranty',        '5 years / 100,000 km'],
+            ].map(([key, val]) => (
+              <div key={key} className="spec-row">
+                <div className="spec-key">{key}</div>
+                <div className="spec-val">{val}</div>
+              </div>
+            ))}
           </div>
         </div>
 

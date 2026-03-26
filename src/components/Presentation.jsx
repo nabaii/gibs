@@ -438,13 +438,12 @@ export default function Presentation({ onEnterWebsite }) {
               <thead><tr><th>Category</th><th>Allocation</th></tr></thead>
               <tbody>
                 {[
-                  ['Brand Strategy & Creative Development', '15%'],
-                  ['Website & Digital Platform Build', '12%'],
-                  ['Paid Media (Digital + Traditional)', '30%'],
-                  ['Influencer & PR Partnerships', '15%'],
-                  ['Event & Experiential Activations', '12%'],
-                  ['B2B / Fleet Marketing', '8%'],
-                  ['Content Production (Video, Photo, Copy)', '8%'],
+                  ['Brand Strategy & Creative Development', '17%'],
+                  ['Website & Digital Platform Build', '14%'],
+                  ['Paid Media (Digital + Traditional)', '32%'],
+                  ['Influencer & PR Partnerships', '17%'],
+                  ['B2B / Fleet Marketing', '10%'],
+                  ['Content Production (Video, Photo, Copy)', '10%'],
                 ].map(([cat, pct]) => (
                   <tr key={cat}><td>{cat}</td><td>{pct}</td></tr>
                 ))}
