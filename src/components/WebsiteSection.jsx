@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import Presentation from './Presentation'
 
 // ─── CONSTANTS ───────────────────────────────────────────────────────────────
 const FUEL_PRICE    = 897   // ₦ per litre (PMS)
@@ -150,8 +151,17 @@ export default function WebsiteSection({ onShowEnding }) {
   const [slideIdx, setSlideIdx] = useState(0)
   const slideTimer = useRef(null)
 
-  // Scroll to top on tab change
-  useEffect(() => { window.scrollTo(0, 0) }, [tab])
+  // Scroll to top on tab change & lock scroll for slideshow
+  useEffect(() => {
+    window.scrollTo(0, 0)
+    if (tab === 'slideshow') {
+      document.body.style.overflow = 'hidden'
+      document.body.style.cursor = 'pointer'
+    } else {
+      document.body.style.overflow = 'auto'
+      document.body.style.cursor = 'default'
+    }
+  }, [tab])
 
   // Scroll-to-end → pitch ending (main tab only)
   useEffect(() => {
@@ -399,12 +409,15 @@ export default function WebsiteSection({ onShowEnding }) {
               <p className="about-text">
                 VANTA Motors was founded on a single conviction: that Nigerian drivers deserve world-class vehicles engineered for their roads, their climate, and their future.
               </p>
-              <p className="about-text">
+              <p className="about-text about-text-full">
                 We didn't set out to make just another car. We set out to make the car Nigeria never had — a luxury hybrid that confronts the realities of our infrastructure head-on, without sacrificing the refinement our drivers deserve.
               </p>
-              <p className="about-text">
+              <p className="about-text about-text-full">
                 The Aero is the result of three years of engineering in partnership with globally certified hybrid specialists, road-tested across Lagos, Abuja, Port Harcourt, and everything in between.
               </p>
+              <button className="about-read-more" onClick={() => goTab('about')}>
+                Read more <span>→</span>
+              </button>
             </div>
             <div className="about-stats">
               {[
@@ -822,58 +835,8 @@ export default function WebsiteSection({ onShowEnding }) {
           SLIDESHOW
       ══════════════════════════════════════════════ */}
       {tab === 'slideshow' && (
-        <div className="ws-slideshow">
-          <div
-            className="ws-slideshow-bg"
-            style={{
-              background: `radial-gradient(ellipse at 50% 40%, ${
-                slideIdx % 2 === 0 ? 'rgba(108,99,255,0.13)' : 'rgba(255,107,71,0.1)'
-              } 0%, transparent 70%)`,
-            }}
-          />
-
-          <div className="ws-slide-card" key={slideIdx}>
-            <div className="ws-slide-tag">{SLIDES[slideIdx].tag}</div>
-            <div className="ws-slide-sub">{SLIDES[slideIdx].sub}</div>
-            <h2 className="ws-slide-title" style={{ color: SLIDES[slideIdx].accent }}>
-              {SLIDES[slideIdx].title}
-            </h2>
-            <p className="ws-slide-desc">{SLIDES[slideIdx].desc}</p>
-
-            <div className="ws-slide-dots">
-              {SLIDES.map((_, i) => (
-                <button
-                  key={i}
-                  className={`ws-slide-dot ${i === slideIdx ? 'active' : ''}`}
-                  onClick={() => { clearInterval(slideTimer.current); setSlideIdx(i) }}
-                />
-              ))}
-            </div>
-
-            <div className="ws-slide-nav">
-              <button
-                className="ws-slide-nav-btn"
-                onClick={() => { clearInterval(slideTimer.current); setSlideIdx(i => (i - 1 + SLIDES.length) % SLIDES.length) }}
-              >
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" width="16" height="16">
-                  <polyline points="15,18 9,12 15,6"/>
-                </svg>
-              </button>
-              <button
-                className="ws-slide-nav-btn"
-                onClick={() => { clearInterval(slideTimer.current); setSlideIdx(i => (i + 1) % SLIDES.length) }}
-              >
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" width="16" height="16">
-                  <polyline points="9,18 15,12 9,6"/>
-                </svg>
-              </button>
-            </div>
-          </div>
-
-          {/* Mini car at bottom of slideshow */}
-          <div className="ws-slideshow-car">
-            <CarSVG />
-          </div>
+        <div className="ws-slideshow-wrap">
+          <Presentation onEnterWebsite={() => goTab('main')} />
         </div>
       )}
 

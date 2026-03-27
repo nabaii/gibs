@@ -1059,6 +1059,28 @@ h2.section-title {
   letter-spacing: 1px;
 }
 
+/* ─── About: Read More ─── */
+.about-read-more {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--coral);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  padding: 0;
+  margin-top: 4px;
+}
+.about-read-more span {
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+.about-read-more:hover span {
+  transform: translateX(4px);
+}
+
 /* ─── SPECIFICATIONS ─── */
 .specs-grid {
   border: 1px solid rgba(255, 255, 255, 0.06);
@@ -1355,6 +1377,11 @@ h2.section-title {
 }
 
 /* ─── SLIDESHOW ─── */
+.ws-slideshow-wrap {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+}
 .ws-slideshow {
   min-height: calc(100vh - 64px);
   display: flex;
@@ -1477,6 +1504,9 @@ h2.section-title {
     -webkit-overflow-scrolling: touch;
     align-items: flex-start;
   }
+  .slide > .slide-inner {
+    margin: auto 0;
+  }
   .nav-arrow { display: none; }
   #dot-nav { bottom: 18px; }
   #click-hint { display: none; }
@@ -1546,7 +1576,7 @@ h2.section-title {
   .ws-nav-brand { letter-spacing: 4px; font-size: 15px; }
 
   /* ── Website hero ── */
-  .ws-hero { padding: 80px 20px 40px; min-height: auto; }
+  .ws-hero { padding: 80px 20px 40px; min-height: 100vh; }
   .ws-brand { letter-spacing: 4px; font-size: 13px; }
   .ws-hero-sub { font-size: 15px; margin-bottom: 28px; }
   .ws-cta { padding: 14px 28px; font-size: 11px; letter-spacing: 2px; }
@@ -1585,6 +1615,8 @@ h2.section-title {
   /* ── About ── */
   .about-grid { grid-template-columns: 1fr; gap: 32px; }
   .about-text { font-size: 14px; line-height: 1.7; margin-bottom: 14px; }
+  .about-text-full { display: none; }
+  .about-read-more { display: inline-block; }
   .about-stats { grid-template-columns: 1fr 1fr; }
   .about-stat { padding: 24px 20px; }
   .about-stat-num { font-size: 32px; }

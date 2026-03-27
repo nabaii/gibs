@@ -318,10 +318,10 @@ export default function Presentation({ onEnterWebsite }) {
 
         {/* SLIDE 9 — Visual Campaign */}
         <div {...s(8)}>
-          <div className="slide-inner" style={{ textAlign: 'center' }}>
+          <div className="slide-inner">
             <div className="slide-number reveal">05 — Campaign Concept</div>
             <h2 className="section-title reveal reveal-d1">"<span className="accent">Outsmart the Road.</span>"</h2>
-            <p className="subtitle reveal reveal-d2" style={{ margin: '0 auto 24px', textAlign: 'center', maxWidth: '600px' }}>
+            <p className="subtitle reveal reveal-d2" style={{ margin: '0 0 24px', maxWidth: '600px' }}>
               Hybrid ownership as a mark of intelligence. Every visual, story, and touchpoint reinforces: choosing hybrid means you've outthought the rest.
             </p>
             <div className="card-grid reveal reveal-d3">
