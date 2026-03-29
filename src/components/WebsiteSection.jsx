@@ -836,7 +836,7 @@ export default function WebsiteSection({ onShowEnding }) {
       ══════════════════════════════════════════════ */}
       {tab === 'slideshow' && (
         <div className="ws-slideshow-wrap">
-          <Presentation onEnterWebsite={() => goTab('main')} />
+          <Presentation onEnterWebsite={() => goTab('main')} embedded />
         </div>
       )}
 

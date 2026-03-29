@@ -27,7 +27,7 @@ function triggerReveal(slideEl) {
   })
 }
 
-export default function Presentation({ onEnterWebsite }) {
+export default function Presentation({ onEnterWebsite, embedded = false }) {
   const [current, setCurrent] = useState(0)
   const [isAnimating, setIsAnimating] = useState(false)
   const [hintDismissed, setHintDismissed] = useState(false)
@@ -124,12 +124,14 @@ export default function Presentation({ onEnterWebsite }) {
         Click or use arrow keys to advance
       </div>
 
-      <button
-        className="skip-to-site"
-        onClick={(e) => { e.stopPropagation(); onEnterWebsite() }}
-      >
-        Skip to Website →
-      </button>
+      {!embedded && (
+        <button
+          className="skip-to-site"
+          onClick={(e) => { e.stopPropagation(); onEnterWebsite() }}
+        >
+          Skip to Website →
+        </button>
+      )}
 
       <div id="dot-nav">
         {Array.from({ length: TOTAL_SLIDES }, (_, i) => (
